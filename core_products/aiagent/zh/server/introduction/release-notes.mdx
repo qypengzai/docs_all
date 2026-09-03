@@ -1,11 +1,30 @@
 ---
-date: "2026-07-27"
+
+date: "2026-08-25"
 ---
 # 发布日志
 
 ---
 
 ## V2
+
+
+### 2026-08-21
+
+<Accordion title="服务端 v2.14.0" defaultOpen="true">
+
+发布日期：2026-08-21
+
+**新增功能**
+
+| 功能项 | 功能描述 | 相关文档 |
+| --- | --- | --- |
+| 新增 Microsoft ASR 供应商 | 新增 Microsoft 语音识别能力。配置 `ASR.Vendor` 为 `Microsoft`，并可在 `ASR.Params` 中配置 `language`、`phrase_list` 等参数。开通请联系 ZEGO 商务。 | [配置 ASR](/aiagent-server/guides/configuring-asr) |
+| 获取本轮 AI 语音播报的文本内容 `PlayedText` | AI 播报被打断时，可通过 `Interrupted` 回调中的 `PlayedText` 获取本轮实际已播放的文本内容。该能力适用于 LLM 输出和 [sendAgentInstanceTTS](/aiagent-server/api-reference/agent-instance-control/send-agent-instance-tts) 触发的语音播报。 | [主动调用 LLM 或 TTS](/aiagent-server/guides/proactive-invocation-of-llm-and-tts) |
+| 对讲机模式与 AI Agent 聆听模式支持取消聆听 | 创建智能体实例时，可通过 `AdvancedConfig.CommunicationMode` 设置互动模式：`1` 为聆听模式，`2` 为对讲机模式。调用 [StopListening](/aiagent-server/api-reference/agent-instance-control/stop-listening) 可结束当前聆听，请求需携带 `AgentInstanceId`，可选 `UserId` 和递增的 `Sequence`。 | [互动模式：全双工、聆听、对讲机](/aiagent-server/advanced/interaction-mode) |
+| 基于 Server Secret 加密 APIKey | 在 `AdvancedConfig` 中将 `LLMApiKeyEncryptMode` 设置为 `1`，启用 AES-128-GCM 加密模式。使用 Server Secret 加密 `LLM.ApiKey` 后，再用于注册智能体或创建智能体实例请求。密文不合法或解密失败时返回错误码 `410001040`。 | [创建语音智能体实例](/aiagent-server/api-reference/agent-instance-management/create-agent-instance)、[返回码](/aiagent-server/api-reference/return-codes) |
+
+</Accordion>
 
 
 ### 2026-07-24
@@ -246,7 +265,7 @@ date: "2026-07-27"
 
 | 功能项             | 功能描述                                                                                                                                                                                                                                                                                                                                                                                          | 相关文档                                                                                     |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| 支持数字人视频通话 | 支持在[数字人 PaaS 服务](https://doc-zh.zego.im/aigc-digital-human-server/introduction/overview)创建数字人形象，通过创建数字人智能体实例，实现与数字人的超低延迟实时视频互动。<ul><li>数字人驱动延迟 500ms 内，互动端到端延迟 2s 内（用户说话结束至看到 AI 数字人视频）。</li><li>超清数字人视频，真实 1080P 效果。</li><li>面部表情真实自然。嘴部及面部表情自然。</li><li>唇形准确。支持所有语种，尤其中英文，口型准确。</li></ul> | [实现数字人视频通话](./../quick-start-with-digital-human.mdx)                                |
+| 支持数字人视频通话 | 支持在[数字人 PaaS 服务](https://doc-zh.zego.im/aigc-digital-human-server/introduction/overview)创建数字人形象，通过创建数字人智能体实例，实现与数字人的超低延迟实时视频互动。<ul><li>数字人驱动延迟 500ms 内，互动端到端延迟 2s 内（用户说话结束至看到 AI 数字人视频）。</li><li>超清数字人视频，真实 1080P 效果。</li><li>面部表情真实自然。嘴部及面部表情自然。</li><li>唇形准确。支持所有语种，尤其中英文，口型准确。</li></ul> | {props.platform === "minigram" ? "-":<a href="./../quick-start-with-digital-human" target='_blank'>实现数字人视频通话</a>}                              |
 | 多智能体多音色输出 | 支持与多智能体互动时，主动调用 TTS 支持多音色输出                                                                                                                                                                                                                                                                                                                                                 | [主动调用 TTS](/aiagent-server/api-reference/agent-instance-control/send-agent-instance-tts) |
 
 **改进优化**
